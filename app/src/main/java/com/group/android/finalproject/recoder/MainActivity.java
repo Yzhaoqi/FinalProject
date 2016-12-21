@@ -21,6 +21,8 @@ import com.group.android.finalproject.R;
 import com.group.android.finalproject.common.DBbase;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -187,7 +189,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        tv_date.setText(localInfo.getDate());
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        final String date = formatter.format(c.getTime());
+        tv_date.setText(date);
 
         builder.setTitle("个人语音日志");
         builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String talk = et_talk.getText().toString();
                 String fileUrl = mRecorder.getFileUrl();
                 String place = et_place.getText().toString();
-                String date = localInfo.getDate();
+
                 Log.e("DATEINMAIN", date);
                 if (title.isEmpty() || feel.isEmpty() || talk.isEmpty()) {
                     showToast("填空不能为空");

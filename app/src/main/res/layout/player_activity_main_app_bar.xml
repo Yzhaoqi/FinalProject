@@ -27,8 +27,12 @@
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <LinearLayout
+        android:id="@+id/player_play_system"
+        android:background="#DBDBDB"
         android:layout_width="match_parent"
-        android:layout_height="54dp">
+        android:layout_height="54dp"
+        android:touchscreenBlocksFocus="true"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"

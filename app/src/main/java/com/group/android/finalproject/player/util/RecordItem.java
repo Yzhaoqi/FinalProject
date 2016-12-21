@@ -5,12 +5,6 @@ package com.group.android.finalproject.player.util;
  */
 
 public class RecordItem {
-//    map.put("title", cursor.getString(cursor.getColumnIndex("title")));
-//    map.put("date", cursor.getString(cursor.getColumnIndex("date")));
-//    map.put("feel", cursor.getString(cursor.getColumnIndex("feel")));
-//    map.put("place", cursor.getString(cursor.getColumnIndex("place")));
-//    map.put("remark", cursor.getString(cursor.getColumnIndex("remark")));
-//    map.put("storeUrl", cursor.getString(cursor.getColumnIndex("storeUrl")));
     private String title, date, feel, place, remark, storeUrl;
 
     public RecordItem(String title, String date, String feel, String place, String remark, String storeUrl) {
@@ -44,5 +38,13 @@ public class RecordItem {
 
     public String getTitle() {
         return title;
+    }
+
+    public void update(String title, String date, String feel, String place, String remark) {
+        this.title = title;
+        this.date = date;
+        this.feel = feel;
+        this.place = place;
+        this.remark = remark;
     }
 }

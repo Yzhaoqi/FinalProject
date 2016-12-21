@@ -20,7 +20,6 @@
         <activity android:name=".recoder.MainActivity" />
         <activity
             android:name=".elect.ElectActivity"
-            android:label="@string/title_activity_elect"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,9 +29,9 @@
         </activity>
         <activity
             android:name=".player.activity.PlayerMainActivity"
-            android:label="PlayerMainActivity"
-            android:theme="@style/AppTheme" >
-        </activity>
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".player.activity.PlayerPlayActivity"></activity>
+        <service android:name=".player.services.MusicService" />
     </application>
 
 </manifest>
