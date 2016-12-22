@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.group.android.finalproject.player.presenter.MusicPresenter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,6 +15,7 @@ public class MusicService extends Service {
     private MediaPlayer mediaPlayer;
     private final IBinder binder = new MyBinder();
     private boolean isStop = false;
+    private MusicPresenter musicPresenter;
 
     public class MyBinder extends Binder {
         public MusicService getService() {
@@ -29,6 +32,7 @@ public class MusicService extends Service {
 
     @Override
     public void onCreate() {
+        musicPresenter = MusicPresenter.getInstance(this);
         super.onCreate();
     }
 
@@ -48,7 +52,7 @@ public class MusicService extends Service {
     public void load(String filePath) {
         try {
             if (mediaPlayer != null) {
-                mediaPlayer.stop();
+                if(!isStop) mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
             }
@@ -56,21 +60,12 @@ public class MusicService extends Service {
             mediaPlayer.setDataSource(filePath);
             mediaPlayer.prepare();
             mediaPlayer.setLooping(false);
-//            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                @Override
-//                public void onCompletion(MediaPlayer mediaPlayer) {
-//                    if (current == musicList.size()-1) current = 0;
-//                    else current++;
-//                    try {
-//                        mediaPlayer.reset();
-//                        mediaPlayer.setDataSource(musicList.get(current).getPath());
-//                        mediaPlayer.prepare();
-//                        mediaPlayer.start();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    musicPresenter.finishPlaying();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -105,8 +100,9 @@ public class MusicService extends Service {
     }
 
     public void seek(int progress) {
-        if (mediaPlayer != null && !isStop)
+        if (mediaPlayer != null && !isStop) {
             mediaPlayer.seekTo(progress);
+        }
     }
 
     public int getCurrentPosition() {

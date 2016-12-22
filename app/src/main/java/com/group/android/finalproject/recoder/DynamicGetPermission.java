@@ -2,6 +2,7 @@ package com.group.android.finalproject.recoder;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import rx.functions.Action1;
  * Created by root on 16-12-5.
  */
 public class DynamicGetPermission extends AppCompatActivity {
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final SharedPreferences sharedPreferences = getSharedPreferences("Alarm_Time", MODE_PRIVATE);
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions
                 .request(Manifest.permission.ACCESS_FINE_LOCATION,
@@ -26,18 +29,13 @@ public class DynamicGetPermission extends AppCompatActivity {
                     @Override
                     public void call(Boolean granted) {
                         if (granted) {
-                            Toast.makeText(DynamicGetPermission.this, "Granted", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DynamicGetPermission.this, MainActivity.class);
-                            startActivity(intent);
+                            //Toast.makeText(DynamicGetPermission.this, "Granted", Toast.LENGTH_SHORT).show();
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("permission_check", true);
+                            editor.commit();
                             DynamicGetPermission.this.finish();
                         } else {
-                            Toast.makeText(DynamicGetPermission.this, "App will finish in 3 secs...", Toast.LENGTH_SHORT).show();
-                            (new Handler()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    DynamicGetPermission.this.finish();
-                                }
-                            }, 3000);
+                            Toast.makeText(DynamicGetPermission.this, "Permission deny. Something will run with error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -1,6 +1,7 @@
 package com.group.android.finalproject.recoder;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -60,11 +62,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recorder_activity_main);
-        getLocation();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) setBackground((int)extras.get("color"));
         getRecorder();
         findView();
         bindListener();
         setmRecorfView();
+    }
+
+    private void setBackground(int color) {
+        RelativeLayout background_player = (RelativeLayout) findViewById(R.id.recorder_main_background);
+        switch(color) {
+            case 0:
+                background_player.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                break;
+            case 1:
+                background_player.setBackgroundColor(Color.parseColor("#ABABAB"));
+                break;
+        }
     }
 
     private void setmRecorfView() {
@@ -151,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showDialog() {
         dBbase = new DBbase(this);
+        getLocation();
         final MyLocation.LOCATION localInfo = mLocation.getLocation();
 
         LayoutInflater factory = LayoutInflater.from(MainActivity.this);
@@ -208,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (title.isEmpty() || feel.isEmpty() || talk.isEmpty()) {
                     showToast("填空不能为空");
                 } else {
+                    setResult(RESULT_OK);
                     mRecorfView.setCountdownTime(0);
                     mRecorder.stopRecord();
                     fileUrl = mRecorder.getFileUrl();

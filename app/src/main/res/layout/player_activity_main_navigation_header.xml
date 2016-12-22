@@ -12,7 +12,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_alignParentBottom="true"
-        android:text="This is a hearder"
+        android:text="回忆44"
         android:textSize="32sp"/>
 
 </RelativeLayout>

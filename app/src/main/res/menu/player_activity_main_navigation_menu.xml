@@ -8,8 +8,10 @@
             android:id="@+id/menu_search_by_time"
             android:title="Search By Time" />
         <item
-            android:title="TODO" />
+            android:id="@+id/menu_setting"
+            android:title="Setting" />
         <item
-            android:title="TODO" />
+            android:id="@+id/menu_background_change"
+            android:title="Change Background" />
     </group>
 </menu>

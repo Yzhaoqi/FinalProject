@@ -29,34 +29,47 @@
 
         <TableRow>
             <TextView
+                android:textSize="20sp"
                 android:text="时间："/>
             <TextView
+                android:textSize="20sp"
                 android:id="@+id/player_play_date"
                 android:layout_weight="1"/>
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="8dp">
             <TextView
+                android:textSize="20sp"
                 android:text="地点："/>
             <TextView
+                android:textSize="20sp"
                 android:id="@+id/player_play_place"
                 android:layout_weight="1"/>
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="8dp">
             <TextView
+                android:textSize="20sp"
                 android:text="心情："/>
             <TextView
+                android:textSize="20sp"
                 android:id="@+id/player_play_feel"
                 android:layout_weight="1"/>
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:layout_marginTop="8dp">
             <TextView
+                android:textSize="20sp"
                 android:text="感想："/>
             <TextView
+                android:textSize="20sp"
                 android:id="@+id/player_play_remark"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="top"
+                android:minLines="6"/>
         </TableRow>
 
     </TableLayout>

@@ -1,10 +1,11 @@
-# 回忆44
+# 回忆44 ver1.0.0
 
 ### 待完成部分
 
-* 语音播放器
 * 录音的兼容
-* GPS定位
-* Notification、Widget
-* Broadcast
+* 已知Bug：
 
+
+  1. Setting界面主题没有同步
+  2. 点击返回键
+  3. 通知时间
