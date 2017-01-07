@@ -46,6 +46,7 @@ import com.group.android.finalproject.recoder.Recorder;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,7 +98,8 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
             musicPresenter.setAlarmTime(sharedPreferences.getInt("hour", 21), sharedPreferences.getInt("minute", 0));
         }
 
-        recordItemList = dBbase.queryAll();
+        recordItemList = new ArrayList<RecordItem>();
+        if (dBbase.queryAll() != null) recordItemList.addAll(dBbase.queryAll());
         recordAdapter = new RecordAdapter(this, recordItemList);
         swipeMenuListView.setAdapter(recordAdapter);
         setSwipeList();
@@ -144,9 +146,8 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
         switch (requestCode) {
             case 0:
                 if (resultCode == RESULT_OK) {
-                    if (recordItemList != null) recordItemList.clear();
-                    if (dBbase.queryAll() != null) recordItemList.addAll(dBbase.queryAll());
-                    else recordItemList = dBbase.queryAll();
+                    recordItemList.clear();
+                    recordItemList.addAll(dBbase.queryAll());
                     recordAdapter.notifyDataSetChanged();
                 }
                 break;
@@ -158,10 +159,11 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
+            moveTaskToBack(true);
             return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
         }
-        return super.onKeyDown(keyCode, event);
     }
 
     private void setSwipeList() {
@@ -221,7 +223,7 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
         switch(item.getItemId()) {
             case R.id.menu_all_list:
                 recordItemList.clear();
-                recordItemList.addAll(dBbase.queryAll());
+                if (dBbase.queryAll() != null) recordItemList.addAll(dBbase.queryAll());
                 recordAdapter.notifyDataSetChanged();
                 break;
             case R.id.menu_search_by_time:
@@ -229,6 +231,7 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
                 break;
             case R.id.menu_setting:
                 Intent intent = new Intent(PlayerMainActivity.this, SettingMainActivity.class);
+                intent.putExtra("color", colorSet);
                 startActivityForResult(intent, 3);
                 break;
             case R.id.menu_background_change:
@@ -332,7 +335,7 @@ public class PlayerMainActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 recordItemList.clear();
-                recordItemList.addAll(dBbase.queryAll());
+                if (dBbase.queryAll() != null) recordItemList.addAll(dBbase.queryAll());
                 String start = start_date.getText().toString() + " 00:00:00";
                 String end = end_date.getText().toString() + " 23:59:59";
                 String location = loc.getText().toString();

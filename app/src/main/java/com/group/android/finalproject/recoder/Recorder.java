@@ -65,13 +65,13 @@ public class Recorder {
             isRecording = true;
             isPause = false;
         } else {
-            if (isPause) {
-                mRecorder.resume();
-                isPause = false;
-            } else {
-                mRecorder.pause();
-                isPause = true;
-            }
+//            if (isPause) {
+//                mRecorder.resume();
+//                isPause = false;
+//            } else {
+//                mRecorder.pause();
+//                isPause = true;
+//            }
         }
     }
 

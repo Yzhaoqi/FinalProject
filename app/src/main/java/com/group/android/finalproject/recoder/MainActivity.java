@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recorder_activity_main);
+        getLocation();
         Bundle extras = getIntent().getExtras();
         if (extras != null) setBackground((int)extras.get("color"));
         getRecorder();
@@ -114,27 +115,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.start:
                 // 录音波形动画
-                mRecorfView.setModel(RecordView.MODEL_RECORD);
-                mRecorder.startRecord();
+                if(!hasRecord) {
+                    mRecorfView.setModel(RecordView.MODEL_RECORD);
+                    mRecorder.startRecord();
 
-//                hasRecord = true;
-//                btn_delete.setClickable(true);
-//                btn_ok.setClickable(true);
-//                startAnimate();
-//                mRecorfView.start();
-
-                if (mRecorder.isPause()) {
+                    hasRecord = true;
                     btn_delete.setClickable(true);
                     btn_ok.setClickable(true);
-                    stopAnimate();
-                    mRecorfView.cancel();
-                } else {
-                    hasRecord = true;
-                    btn_delete.setClickable(false);
-                    btn_ok.setClickable(false);
                     startAnimate();
                     mRecorfView.start();
                 }
+//                if (mRecorder.isPause()) {
+//                    btn_delete.setClickable(true);
+//                    btn_ok.setClickable(true);
+//                    stopAnimate();
+//                    mRecorfView.cancel();
+//                } else {
+//                    hasRecord = true;
+//                    btn_delete.setClickable(false);
+//                    btn_ok.setClickable(false);
+//                    startAnimate();
+//                    mRecorfView.start();
+//                }
                 break;
             case R.id.ok:
                 if (!hasRecord) {
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 hasRecord = false;
                 if (mRecorder == null || mRecorfView == null) return;
+                mRecorfView.cancel();
                 stopAnimate();
                 mRecorfView.cancel();
 //                mRecorfView.setCountdownTime(0);
@@ -166,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showDialog() {
         dBbase = new DBbase(this);
-        getLocation();
         final MyLocation.LOCATION localInfo = mLocation.getLocation();
 
         LayoutInflater factory = LayoutInflater.from(MainActivity.this);

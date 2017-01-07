@@ -3,6 +3,7 @@ package com.group.android.finalproject.notification.activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ public class SettingMainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_activity);
+
+        Bundle extras = getIntent().getExtras();
+        setBackground((int)extras.get("color"));
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.setting_toolbar);
         toolbar.setTitle("Settings");
@@ -121,6 +125,18 @@ public class SettingMainActivity extends AppCompatActivity {
         } else {
             linearLayout.setVisibility(View.GONE);
             musicPresenter.cancelAlarmManager();
+        }
+    }
+
+    public void setBackground(int color) {
+        LinearLayout background_setting = (LinearLayout)findViewById(R.id.setting_activity);
+        switch(color) {
+            case 0:
+                background_setting.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                break;
+            case 1:
+                background_setting.setBackgroundColor(Color.parseColor("#ABABAB"));
+                break;
         }
     }
 }

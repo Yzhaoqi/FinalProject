@@ -124,10 +124,15 @@ public class MusicPresenter {
 
         alarmManager = (AlarmManager)mainView.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
+        Calendar sys_time = Calendar.getInstance();
+
         calendar.set(Calendar.HOUR_OF_DAY, mHour);
         calendar.set(Calendar.MINUTE, mMinute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        if (sys_time.getTimeInMillis() > calendar.getTimeInMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
